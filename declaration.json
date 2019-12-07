@@ -1,0 +1,130 @@
+{
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.5.0",
+        "id": "urn:uuid:b92236ad-a677-4574-8bce-7d1487aeb62f",
+        "label": "Demo",
+        "remark": "Demo VIPs",
+        "mgmt": {
+            "class": "Tenant",
+            "jumphost_mgmt_ssh": {
+                "class": "Application",
+                "template": "generic",
+                "jumphost_mgmt_ssh": {
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "10.0.2.10",
+                        "10.0.2.11"
+                    ],
+                    "virtualPort": 22,
+                    "pool": "jumphost_ssh_pool",
+                    "snat": "none"
+                },
+                "jumphost_ssh_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "tcp-half-open"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 22,
+                            "serverAddresses": [
+                                "10.0.4.100"
+                            ]
+                        }
+                    ]
+                }
+            },  
+            "jumphost_mgmt_https": {
+                "class": "Application",
+                "template": "generic",
+                "bigip1_mgmt_https": {
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "10.0.2.10",
+                        "10.0.2.11"
+                    ],
+                    "virtualPort": 443,
+                    "pool": "jumphost_https_pool",
+                    "snat": "none"
+                },
+                "jumphost_https_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "tcp-half-open"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 443,
+                            "serverAddresses": [
+                                "10.0.4.100"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "jumphost_mgmt_http": {
+                "class": "Application",
+                "template": "generic",
+                "bigip1_mgmt_https": {
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "10.0.2.10",
+                        "10.0.2.11"
+                    ],
+                    "virtualPort": 80,
+                    "pool": "jumphost_http_pool",
+                    "snat": "none"
+                },
+                "jumphost_http_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "tcp-half-open"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 80,
+                            "serverAddresses": [
+                                "10.0.4.100"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "health_probe": {
+                "class": "Application",
+                "template": "generic",
+                "health_probe": {
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "10.0.3.10",
+                        "10.0.3.11"
+                    ],
+                    "virtualPort": 3456
+                }
+            },
+	        "forward_outbound": {
+                "class": "Application",
+                "template": "generic",
+                "forward_outbound": {
+                    "class": "Service_L4",
+		            "layer4": "any",
+		            "translateServerAddress": false,
+		            "translateServerPort": false,
+                    "virtualAddresses": [
+                        "0.0.0.0"
+                    ],
+                    "virtualPort": 0,
+                    "snat": "auto",
+			"allowVlans": 
+			[
+			    "internal"
+			]
+          }
+        }
+	}
+    }
+}
