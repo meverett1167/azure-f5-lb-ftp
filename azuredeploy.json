@@ -1750,33 +1750,33 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), concat('lbRule-', parameters('internalLoadBalancerProbePort')), 'allProtocolLbRule')]",
+                        "name": "lbrule1",
                         "properties": {
                             "backendAddressPool": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
                             },
-                            "backendPort": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), parameters('internalLoadBalancerProbePort'), 0)]",
+                            "backendPort": "443",
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
                             },
-                            "frontendPort": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), parameters('internalLoadBalancerProbePort'), 0)]",
+                            "frontendPort": "443",
                             "idleTimeoutInMinutes": 15,
                             "loadDistribution": "Default",
                             "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/tcp-probe-', parameters('internalLoadBalancerProbePort'))]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/httpsProbe')]"
                             },
-                            "protocol": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), 'Tcp', 'All')]"
+                            "protocol": "Tcp"
                         }
                     }
                 ],
                 "probes": [
                     {
-                        "name": "[concat('tcp-probe-', parameters('internalLoadBalancerProbePort'))]",
+                        "name": "httpsProbe",
                         "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": "[parameters('internalLoadBalancerProbePort')]",
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 3,
+                            "port": 443,
                             "protocol": "Tcp"
                         }
                     }
