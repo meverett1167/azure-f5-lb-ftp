@@ -32,7 +32,7 @@
                         {
                             "servicePort": 22,
                             "serverAddresses": [
-                                "10.0.4.100"
+                                "10.0.4.50"
                             ]
                         }
                     ]
@@ -60,7 +60,7 @@
                         {
                             "servicePort": 443,
                             "serverAddresses": [
-                                "10.0.4.100"
+                                "10.0.4.50"
                             ]
                         }
                     ]
@@ -88,7 +88,7 @@
                         {
                             "servicePort": 80,
                             "serverAddresses": [
-                                "10.0.4.100"
+                                "10.0.4.50"
                             ]
                         }
                     ]
