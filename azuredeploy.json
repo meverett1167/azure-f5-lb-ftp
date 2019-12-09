@@ -476,7 +476,7 @@
         "extSubnetPrivateAddressPrefix": "[concat(parameters('vnetAddressPrefix'), '.2.')]",
         "intSubnet1PrivateAddressPrefix": "[concat(parameters('vnetAddressPrefix'), '.4.')]",
         "extNsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(variables('dnsLabel'),'-ext-nsg'))]",
-        "int1NsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(variables('dnsLabel2'),'-int-nsg'))]",
+        "int1NsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(variables('dnsLabel2'),'-int1-nsg'))]",
         "extSelfPublicIpAddressNamePrefix": "[concat(variables('dnsLabel'), '-self-pip')]",
         "extSelfPublicIpAddressIdPrefix": "[resourceId('Microsoft.Network/publicIPAddresses', variables('extSelfPublicIpAddressNamePrefix'))]",
         "extpublicIPAddressNamePrefix": "[concat(variables('dnsLabel'), '-ext-pip')]",
@@ -1151,7 +1151,7 @@
                         "name": "[concat(variables('instanceName'), '-self-ipconfig')]",
                         "properties": {
                             "primary": true,
-                            "privateIPAddress": "[variables('intSubnetPrivateAddress1')]",
+                            "privateIPAddress": "[variables('intSubnet1PrivateAddress')]",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[variables('intSubnet1Id')]"
@@ -1195,7 +1195,7 @@
                         "name": "[concat(variables('instanceName'), '-self-ipconfig')]",
                         "properties": {
                             "primary": true,
-                            "privateIPAddress": "[variables('intSubnetPrivateAddress2')]",
+                            "privateIPAddress": "[variables('intSubnet1PrivateAddress1')]",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[variables('intSubnet1Id')]"
@@ -1479,7 +1479,7 @@
         {
             "apiVersion": "[variables('networkApiVersion')]",
             "location": "[variables('location')]",
-            "name": "[concat(variables('dnsLabel'), '-int1-nsg')]",
+            "name": "[concat(variables('dnsLabel2'), '-int1-nsg')]",
             "properties": {
                 "securityRules": [
                     {
@@ -1724,7 +1724,7 @@
                             "privateIPAddress": "[variables('internalLoadBalancer1Address')]",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[variables('intSubnet2Id')]"
+                                "id": "[variables('intSubnet1Id')]"
                             }
                         }
                     }
@@ -1734,18 +1734,18 @@
                         "name": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), concat('lbRule-', parameters('internalLoadBalancerProbePort')), 'allProtocolLbRule')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internalLoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
                             },
                             "backendPort": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), parameters('internalLoadBalancerProbePort'), 0)]",
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internalLoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
                             },
                             "frontendPort": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), parameters('internalLoadBalancerProbePort'), 0)]",
                             "idleTimeoutInMinutes": 15,
                             "loadDistribution": "Default",
                             "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internalLoadBalancerName')), '/probes/tcp-probe-', parameters('internalLoadBalancerProbePort'))]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/tcp-probe-', parameters('internalLoadBalancerProbePort'))]"
                             },
                             "protocol": "[if(equals(parameters('internalLoadBalancerType'),'Per-protocol'), 'Tcp', 'All')]"
                         }
@@ -2154,13 +2154,21 @@
         }
     ],
     "outputs": {
-        "GUI-F5-1": {
+        "GUI-F5-1-External": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '0')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
         },
-        "GUI-F5-2": {
+        "GUI-F5-2-External": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '1')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
+        },
+        "GUI-F5-1-Internal": {
+            "type": "string",
+            "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '2')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
+        },
+        "GUI-F5-2-Internal": {
+            "type": "string",
+            "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '3')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
         },
          "GUI-APP-HTTPS": {
             "type": "string",
