@@ -1489,6 +1489,20 @@
                             "sourceAddressPrefix": "[parameters('restrictedSrcAddressApp')]",
                             "sourcePortRange": "*"
                         }
+                    },
+                    {
+                        "name": "ext_allow_ftp",
+                        "properties": {
+                            "access": "Allow",
+                            "description": "",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRanges": ["21", "5000-5003"],
+                            "direction": "Inbound",
+                            "priority": 104,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "[parameters('restrictedSrcAddressApp')]",
+                            "sourcePortRange": "*"
+                        }
                     }
                 ]
             },
@@ -1538,6 +1552,20 @@
                             "destinationPortRange": "22",
                             "direction": "Inbound",
                             "priority": 103,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "[parameters('restrictedSrcAddressApp')]",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "ext_allow_ftp",
+                        "properties": {
+                            "access": "Allow",
+                            "description": "",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRanges": ["21", "5000-5003"],
+                            "direction": "Inbound",
+                            "priority": 104,
                             "protocol": "Tcp",
                             "sourceAddressPrefix": "[parameters('restrictedSrcAddressApp')]",
                             "sourcePortRange": "*"
@@ -1633,6 +1661,96 @@
                             },
                             "protocol": "Tcp"
                         }
+                    },
+                    {
+                        "Name": "external-access-21",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 21,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd1')]"
+                            },
+                            "frontendPort": 21,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(variables('extLbId'),'/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5000",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5000,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd1')]"
+                            },
+                            "frontendPort": 5000,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(variables('extLbId'),'/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5001",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5001,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd1')]"
+                            },
+                            "frontendPort": 5001,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(variables('extLbId'),'/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5002",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5002,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd1')]"
+                            },
+                            "frontendPort": 5002,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(variables('extLbId'),'/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5003",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5003,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd1')]"
+                            },
+                            "frontendPort": 5003,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(variables('extLbId'),'/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
                     }
                 ],
                 "probes": [
@@ -1642,6 +1760,33 @@
                             "intervalInSeconds": 15,
                             "numberOfProbes": 3,
                             "port": 443,
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "httpProbe",
+                        "properties": {
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 3,
+                            "port": 80,
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "sshProbe",
+                        "properties": {
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 3,
+                            "port": 22,
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "ftpProbe",
+                        "properties": {
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 3,
+                            "port": 21,
                             "protocol": "Tcp"
                         }
                     }
@@ -1804,6 +1949,96 @@
                             },
                             "protocol": "Tcp"
                         }
+                    },
+                    {
+                        "Name": "external-access-21",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 21,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+                            },
+                            "frontendPort": 21,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5000",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5000,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+                            },
+                            "frontendPort": 5000,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5001",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5001,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+                            },
+                            "frontendPort": 5001,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5002",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5002,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+                            },
+                            "frontendPort": 5002,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "Name": "external-access-5003",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+                            },
+                            "backendPort": 5003,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+                            },
+                            "frontendPort": 5003,
+                            "idleTimeoutInMinutes": 15,
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('internal1LoadBalancerName')), '/probes/ftpProbe')]"
+                            },
+                            "protocol": "Tcp"
+                        }
                     }
                 ],
                 "probes": [
@@ -1831,6 +2066,15 @@
                             "intervalInSeconds": 15,
                             "numberOfProbes": 3,
                             "port": 22,
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "ftpProbe",
+                        "properties": {
+                            "intervalInSeconds": 15,
+                            "numberOfProbes": 3,
+                            "port": 21,
                             "protocol": "Tcp"
                         }
                     }
