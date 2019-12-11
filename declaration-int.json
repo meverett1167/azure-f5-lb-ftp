@@ -8,22 +8,22 @@
         "id": "urn:uuid:b92236ad-a677-4574-8bce-7d1487aeb62f",
         "label": "Demo",
         "remark": "Demo VIPs",
-        "mgmt": {
+        "app1": {
             "class": "Tenant",
-            "jumphost_mgmt_ssh": {
+            "app1_ssh": {
                 "class": "Application",
                 "template": "generic",
-                "jumphost_mgmt_ssh": {
+                "app1_ssh": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
                         "10.0.4.10",
                         "10.0.4.11"
                     ],
                     "virtualPort": 22,
-                    "pool": "jumphost_ssh_pool",
+                    "pool": "app1_ssh_pool",
                     "snat": "auto"
                 },
-                "jumphost_ssh_pool": {
+                "app1_ssh_pool": {
                     "class": "Pool",
                     "monitors": [
                         "tcp-half-open"
@@ -38,20 +38,20 @@
                     ]
                 }
             },  
-            "jumphost_mgmt_https": {
+            "app1_https": {
                 "class": "Application",
                 "template": "generic",
-                "bigip1_mgmt_https": {
+                "app1_https": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
                         "10.0.4.10",
                         "10.0.4.11"
                     ],
                     "virtualPort": 443,
-                    "pool": "jumphost_https_pool",
+                    "pool": "app1_https_pool",
                     "snat": "auto"
                 },
-                "jumphost_https_pool": {
+                "app1_https_pool": {
                     "class": "Pool",
                     "monitors": [
                         "tcp-half-open"
@@ -66,20 +66,20 @@
                     ]
                 }
             },
-            "jumphost_mgmt_http": {
+            "app1_http": {
                 "class": "Application",
                 "template": "generic",
-                "bigip1_mgmt_https": {
+                "app1_https": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
                         "10.0.4.10",
                         "10.0.4.11"
                     ],
                     "virtualPort": 80,
-                    "pool": "jumphost_http_pool",
+                    "pool": "app1_http_pool",
                     "snat": "auto"
                 },
-                "jumphost_http_pool": {
+                "app1_http_pool": {
                     "class": "Pool",
                     "monitors": [
                         "tcp-half-open"
@@ -94,10 +94,10 @@
                     ]
                 }
             },
-            "health_probe": {
+            "health_probe_vs": {
                 "class": "Application",
                 "template": "generic",
-                "health_probe": {
+                "health_probe_vs": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
                         "10.0.5.10",
@@ -106,7 +106,7 @@
                     "virtualPort": 3456
                 }
             },
-	        "forward_outbound": {
+	        "forward_outbound_vs": {
                 "class": "Application",
                 "template": "generic",
                 "forward_outbound": {
