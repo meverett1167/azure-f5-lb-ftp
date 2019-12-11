@@ -1,6 +1,8 @@
 # azure-f5-lb-ftp
 ## Summary
-Deploys a demo app protected by HA pair of F5 behind Azure ALB
+Deploys a demo FTP server protected by HA pair of F5 behind Azure ALB. 2 tiers of network appliances protect the app server. The external tier is intended to emulate a firewall tier, where a customer could replace these devices with a firewall vendor of their choosing.
+
+![Image of FTP](images/FTP.gif)
 
 ## Requirements
 - 2x eval keys for BIG-IP (external pair, firewall)
