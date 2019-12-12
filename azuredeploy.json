@@ -1206,11 +1206,10 @@
         {
             "apiVersion": "[variables('networkApiVersion')]",
             "dependsOn": [
-                "[variables('extLbId')]",
+                "[variables('intLb1Id')]",
                 "[variables('vnetId')]",
                 "extpipcopy",
-                "[variables('extNsgID')]",
-                "[concat('Microsoft.Network/publicIPAddresses/', variables('extSelfPublicIpAddressNamePrefix'), '1')]"
+                "[variables('int1NsgID')]"
             ],
             "location": "[variables('location')]",
             "name": "[concat(variables('ext2NicName'), '1')]",
