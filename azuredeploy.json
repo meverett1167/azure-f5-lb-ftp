@@ -1208,7 +1208,6 @@
             "dependsOn": [
                 "[variables('intLb1Id')]",
                 "[variables('vnetId')]",
-                "extpipcopy",
                 "[variables('int1NsgID')]"
             ],
             "location": "[variables('location')]",
@@ -1883,7 +1882,7 @@
             "properties": {
                 "backendAddressPools": [
                     {
-                        "name": "LoadBalancerBackEnd"
+                        "name": "loadBalancerBackEnd"
                     }
                 ],
                 "frontendIPConfigurations": [
