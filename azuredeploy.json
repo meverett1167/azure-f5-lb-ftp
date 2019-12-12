@@ -2321,6 +2321,8 @@
                 "[concat('Microsoft.Storage/storageAccounts/', variables('newDataStorageAccountName'))]",
                 "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName1'))]",
                 "[variables('newCustomImageName')]",
+                "[concat('Microsoft.Compute/virtualMachines/', variables('dnsLabel'), '-', variables('instanceName'), '0/extensions/start')]",
+                "[concat('Microsoft.Compute/virtualMachines/', variables('dnsLabel'), '-', variables('instanceName'), '1/extensions/start')]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('mgmtNicName'), '2')]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('ext2NicName'), '0')]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('int2NicName'), '0')]"
@@ -2374,6 +2376,8 @@
                 "[concat('Microsoft.Storage/storageAccounts/', variables('newDataStorageAccountName'))]",
                 "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName1'))]",
                 "[variables('newCustomImageName')]",
+                "[concat('Microsoft.Compute/virtualMachines/', variables('dnsLabel'), '-', variables('instanceName'), '0/extensions/start')]",
+                "[concat('Microsoft.Compute/virtualMachines/', variables('dnsLabel'), '-', variables('instanceName'), '1/extensions/start')]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('mgmtNicName'), '3')]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('ext2NicName'), '1')]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('int2NicName'), '1')]"
