@@ -16,7 +16,7 @@ Deploys a demo FTP server protected by HA pair of F5 behind Azure ALB. 2 tiers o
 ### Verify F5 config
 When the Azure deployment completes, the output will contain multiple URL's. Use these to inspect the configuration of the BIG-IP devices using the UI over HTTPS, or console over SSH. 
 
-![Outputs example](images/outputsexample.gif)
+![Outputs example](images/outputsexample.GIF)
 
 ### Verify application
 There is also a URL for the app that is deployed and protected by BIG-IP. Visit this URL and inspect your IP headers and other information about your connection. It may take a few mins (approx 5 mins) after the Azure deployment has completed for the application to be up and running, and reachable via the URL provided in the outputs.
