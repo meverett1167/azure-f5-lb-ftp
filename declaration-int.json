@@ -10,6 +10,73 @@
         "remark": "Demo VIPs",
         "app1": {
             "class": "Tenant",
+            "app1_ftp_active": {
+                "class": "Application",
+                "template": "generic",
+                "app1_ftp_active": {
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "10.0.4.10",
+                        "10.0.4.11"
+                    ],
+                    "virtualPort": 20,
+                    "pool": "app1_ftp_active_pool",
+                    "snat": "none"
+                },
+                "app1_ftp_active_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "tcp-half-open"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 20,
+                            "serverAddresses": [
+                                "10.0.6.100"
+                            ]
+                        }
+                    ]
+                }
+            },  
+            "app1_ftp_control": {
+                "class": "Application",
+                "template": "generic",
+                "app1_ftp_control": {
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "10.0.4.10",
+                        "10.0.4.11"
+                    ],
+                    "virtualPort": 21,
+                    "pool": "app1_ftp_control_pool",
+                    "snat": "auto",
+                    "profileFTP": {
+                        "bigip": "/Common/ftp"
+                    },
+                    "iRules": [
+                        "ftp_port_lockdown"
+                    ]
+                },
+                "app1_ftp_control_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "tcp-half-open"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 21,
+                            "serverAddresses": [
+                                "10.0.6.100"
+                            ]
+                        }
+                    ]
+                },
+                "ftp_port_lockdown": {
+                    "class": "iRule",
+                    "label": "ftp_port_lockdown",
+                    "iRule": "when SERVER_CONNECTED {\n FTP::port 5000 5003\n }"
+                }
+            },  
             "app1_ssh": {
                 "class": "Application",
                 "template": "generic",

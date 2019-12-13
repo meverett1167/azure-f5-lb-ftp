@@ -2483,41 +2483,37 @@
         }
     ],
     "outputs": {
-        "GUI-F5-1-External": {
+        "MGMT-F5-1-External": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '0')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
         },
-        "GUI-F5-2-External": {
+        "MGMT-F5-2-External": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '1')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
         },
-        "GUI-F5-1-Internal": {
+        "MGMT-F5-1-Internal": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '2')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
         },
-        "GUI-F5-2-Internal": {
+        "MGMT-F5-2-Internal": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('mgmtPublicIPAddressId'), '3')).dnsSettings.fqdn, ':', variables('bigIpMgmtPort'))]"
         },
-         "GUI-APP-HTTPS": {
+        "APP-HTTPS": {
             "type": "string",
             "value": "[concat('https://',reference(concat(variables('extPublicIPAddressIdPrefix'), '0')).dnsSettings.fqdn)]"
         },
-        "GUI-APP-HTTP": {
+        "APP-HTTP": {
             "type": "string",
             "value": "[concat('http://',reference(concat(variables('extPublicIPAddressIdPrefix'), '0')).dnsSettings.fqdn)]"
         },
-        "SSH-APP-VIP": {
+        "SSH-APPSERVER": {
             "type": "string",
             "value": "[concat(reference(concat(variables('extPublicIPAddressIdPrefix'), '0')).dnsSettings.fqdn,' ',22)]"
         },
-        "SSH-URL-F5-1": {
+        "FTP-URL-VIP": {
             "type": "string",
-            "value": "[concat(reference(concat(variables('mgmtPublicIPAddressId'), '0')).dnsSettings.fqdn,' ',22)]"
-        },
-        "SSH-URL-F5-2": {
-            "type": "string",
-            "value": "[concat(reference(concat(variables('mgmtPublicIPAddressId'), '1')).dnsSettings.fqdn,' ',22)]"
+            "value": "[concat('ftp://', reference(concat(variables('mgmtPublicIPAddressId'), '0')).dnsSettings.fqdn)]"
         }
     }
 }
