@@ -20,3 +20,10 @@ When the Azure deployment completes, the output will contain multiple URL's. Use
 
 ### Verify application
 There is also a URL for the app that is deployed and protected by BIG-IP. Visit this URL and inspect your IP headers and other information about your connection. It may take a few mins (approx 5 mins) after the Azure deployment has completed for the application to be up and running, and reachable via the URL provided in the outputs.
+- the web app should be available over HTTP and HTTPS a few minutes after deployment
+- the FTP site should be available via both Active and Passive FTP
+  - remember that some FTP clients behave differently than others. In my testing I primarily used FileZilla to successfully test Active and Passive FTP connections after a fresh deployment.
+- by default, the FTP site allow Read access, not Write access. To change this, SSH to the app server and edit /etc/vsftp.conf. If you don't know how to do this, set up your FTP server of choice within your Azure environment.
+
+## Questions and Comments
+Please raise a GitHub issue if you'd like this demo extended for other use cases!
