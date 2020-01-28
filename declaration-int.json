@@ -8,7 +8,7 @@
         "id": "urn:uuid:b92236ad-a677-4574-8bce-7d1487aeb62f",
         "label": "Demo",
         "remark": "Demo VIPs",
-        "app1": {
+        "api-app1": {
             "class": "Tenant",
             "app1_ftp_active": {
                 "class": "Application",
@@ -16,8 +16,7 @@
                 "app1_ftp_active": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.4.10",
-                        "10.0.4.11"
+                        "10.0.4.110"
                     ],
                     "virtualPort": 20,
                     "pool": "app1_ftp_active_pool",
@@ -44,8 +43,7 @@
                 "app1_ftp_control": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.4.10",
-                        "10.0.4.11"
+                        "10.0.4.110"
                     ],
                     "virtualPort": 21,
                     "pool": "app1_ftp_control_pool",
@@ -83,8 +81,7 @@
                 "app1_ssh": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.4.10",
-                        "10.0.4.11"
+                        "10.0.4.110"
                     ],
                     "virtualPort": 22,
                     "pool": "app1_ssh_pool",
@@ -111,8 +108,7 @@
                 "app1_https": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.4.10",
-                        "10.0.4.11"
+                        "10.0.4.110",
                     ],
                     "virtualPort": 443,
                     "pool": "app1_https_pool",
@@ -139,8 +135,7 @@
                 "app1_https": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.4.10",
-                        "10.0.4.11"
+                        "10.0.4.110"
                     ],
                     "virtualPort": 80,
                     "pool": "app1_http_pool",
@@ -167,8 +162,7 @@
                 "health_probe_vs": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.5.10",
-                        "10.0.5.11"
+                        "10.0.5.110"
                     ],
                     "virtualPort": 3456
                 }
