@@ -108,7 +108,7 @@
                 "app1_https": {
                     "class": "Service_TCP",
                     "virtualAddresses": [
-                        "10.0.4.110",
+                        "10.0.4.110"
                     ],
                     "virtualPort": 443,
                     "pool": "app1_https_pool",
